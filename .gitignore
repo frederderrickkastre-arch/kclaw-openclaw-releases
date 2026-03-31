@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+manager-app/node_modules/
+
+# Build output
+dist/
+manager-app/dist/
+manager-app/src-tauri/target/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*

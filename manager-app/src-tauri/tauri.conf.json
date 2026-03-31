@@ -10,7 +10,6 @@
     "beforeBuildCommand": "npm run build"
   },
   "app": {
-    "title": "KClaw OpenClaw Manager",
     "windows": [
       {
         "title": "KClaw OpenClaw Manager",

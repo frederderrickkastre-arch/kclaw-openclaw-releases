@@ -93,10 +93,12 @@ pub fn delete_instance(id: String) -> Result<(), String> {
 #[tauri::command]
 pub fn start_instance(id: String) -> Result<Instance, String> {
     let mut instances = load_instances();
-    if let Some(inst) = instances.iter_mut().find(|i| i.id == id) {
-        inst.status = "running".to_string();
+    let idx = instances.iter().position(|i| i.id == id);
+    if let Some(idx) = idx {
+        instances[idx].status = "running".to_string();
+        let result = instances[idx].clone();
         save_instances(&instances)?;
-        Ok(inst.clone())
+        Ok(result)
     } else {
         Err("Instance not found".to_string())
     }
@@ -105,14 +107,16 @@ pub fn start_instance(id: String) -> Result<Instance, String> {
 #[tauri::command]
 pub fn stop_instance(id: String) -> Result<Instance, String> {
     let mut instances = load_instances();
-    if let Some(inst) = instances.iter_mut().find(|i| i.id == id) {
-        if let Some(pid) = inst.pid {
+    let idx = instances.iter().position(|i| i.id == id);
+    if let Some(idx) = idx {
+        if let Some(pid) = instances[idx].pid {
             kill_process(pid);
         }
-        inst.status = "stopped".to_string();
-        inst.pid = None;
+        instances[idx].status = "stopped".to_string();
+        instances[idx].pid = None;
+        let result = instances[idx].clone();
         save_instances(&instances)?;
-        Ok(inst.clone())
+        Ok(result)
     } else {
         Err("Instance not found".to_string())
     }
